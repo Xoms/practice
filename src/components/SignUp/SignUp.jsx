@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Input from '../shared/InputField';
 import Form from '../shared/Form'
+import {postUser} from '../../db/localStorage.js'
+
 
 export default class SignUp extends Component{
 
@@ -21,10 +23,10 @@ export default class SignUp extends Component{
 
   onSubmit = (e) => {
     e.preventDefault();
-    const res = {...this.state};
-
-    
-    console.log(res);
+    const {name, email, password} = this.state
+    const newUser = {name, email, password}
+    const user = postUser(newUser)
+    this.props.onSuccess(user)
   }
 
 

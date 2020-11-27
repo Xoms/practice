@@ -2,13 +2,15 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Input from "../shared/InputField"
 import Form from "../shared/Form"
+import {getUser} from '../../db/localStorage.js'
 
 class SignIn extends Component {
 
-  constructor(props){
-this.props = props;
+  constructor(props) {
+  super();
+  this.props = props;
   }
-
+  
   state = {
     email: '',
     password: ''
@@ -23,11 +25,17 @@ this.props = props;
   
 handleSubmit=(event)=>{
   event.preventDefault();
- console.log(this.props); 
-
+  const { email, password } = this.state
+  const currentUser = getUser({email, password})
+  console.log(currentUser);
+  if (currentUser) {
+    this.props.onSuccess(currentUser)
+  }
 }
 
-
+//   getCurrentUser = (users) => {
+//   return users.find(el => el.email === this.state.email && el.password === this.state.password)
+//  }
 
   render() {
     return (
